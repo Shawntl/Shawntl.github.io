@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="A way of self-cultivation of young data scientist">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shawn&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="Shawn&#39;s Blog">
+<meta property="og:description" content="A way of self-cultivation of young data scientist">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Shawn_Song">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/"/>
+
+
+
+
+
+  <title>Shawn's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shawn's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Talk is cheap, Show me the data</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-computer-science">
+          <a href="/computer%20science/computer%20science%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-computer science"></i> <br />
+            
+            Computer Science
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-artificial-intelligence">
+          <a href="/artificial%20intelligence/artificial%20intelligence%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-artificial intelligence"></i> <br />
+            
+            Artificial Intelligence
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-statistics">
+          <a href="/statistics/statistics%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-statistics"></i> <br />
+            
+            Statistics
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-robotics-science">
+          <a href="/robotics%20science/robotics%20science%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-robotics science"></i> <br />
+            
+            Robotics Science
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shawn_Song">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.qqtouxiang.com/d/file/tupian/mx/20170713/jitdbe00jpfpd.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shawn's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/28/hello-world/" itemprop="url">Hello World</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-28T02:46:36-08:00">
+                2020-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/Introduction-of-Causal-Inference/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shawn_Song">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.qqtouxiang.com/d/file/tupian/mx/20170713/jitdbe00jpfpd.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shawn's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/28/Introduction-of-Causal-Inference/" itemprop="url">Introduction of Causal Inference</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-27T18:54:51-08:00">
+                2020-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/statistics/" itemprop="url" rel="index">
+                    <span itemprop="name">statistics</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Introduction-of-Causal-Inference"><a href="#Introduction-of-Causal-Inference" class="headerlink" title="Introduction of Causal Inference"></a>Introduction of Causal Inference</h1><h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>刚刚搭建完个人博客网站（虽然搞强化学习的时候就有这个想法了。。哈哈，不过现在也不晚）。最近在学习因果推断，就干脆把这个内容当作自己博客的第一个专题吧。接触统计这么多年发现因果推断这个东西起因还是“stable learning”。假如当前面临的工业场景就是样本量很小，三位数的级别，但又想要在大样本上利用机器学习得到泛化，这个样本有多大呢？ 大概是五位数到七位数。这几乎是<strong>绝对不可能</strong>泛化的。因为机器学习（ML）模型的学习误差收敛速率与样本量成正比，样本量越大，模型收敛速度越快。而当数据集已经非常大且具有代表性时，没有必要做统计检验。举个简单列子，如果有世界上百分之99人的图片，并用其预测剩下百分之1的人的性别。那么在99%数据上表现足够好的模型应该就是最好的，不必在多此一举做统计假设。<br>而统计学用假设检验是：在样本量足够少的前提下，为了推断出置信度足够高的总体分布。<br>所以两个领域情况不太一样（一个样本少一个样本大），目的也不太一样（一个大多为了解释+推断/一个为了学习+预测），自然对于某种方法（假设检验、元分析/损失函数定义方式）的运用程度不一样。<br>有了这个前提，也就不难解释在我面临的小样本的场景下往往ML方法得出的结论都是错的，machine learning 现在被统计抗拒，因为在一些小样本领域（医学）数据需要统计就是需要<strong>严谨</strong>的实验结论，很多时候<strong>瞎做</strong>predictive modeling你没有办法相信你的结论。当然我知道在机器学习中，一个变量是否重要，往往是通过“特征选择”和“特征重要性排序”来体现的。比如大部分决策树模型和集成树模型都可以提供一个变量重要性排序，可以等同视为统计检验。从实际效果上看，往往更好。But,这也是在样本量大的时候效果更好，用小样本使用机器学习训练在大样本上测试，导致的结果大概率是预测效果很差、特征重要性的结论也是完全错误的。<br>所以既然小样本上ML预测能力是无论如何都保证不了的，不如我们花更多的时间在小样本的信息挖掘和解释上来弥补ML这部分的劣势，这也就引出了我下面要讨论的因果推断，机器学习和统计学互相借鉴的东西还是有很多的：</p>
+<h2 id="Why-Causal-Inference"><a href="#Why-Causal-Inference" class="headerlink" title="Why Causal Inference?"></a>Why Causal Inference?</h2><p>实证经济学因果推断所探究的问题是“如果某事件发生，结果会有什么变化”，它的核心在于反事实（conterfactual)情形的构建。因果推断关心的是一个事件发生或者不发生对我们关心的个体的影响。<br>很多人可能一开始会将因果性和相关性搞混，会以为一个变量变高另外一个变量也变高就是因果性，但这是相关性，“相关性并不意味着因果性”，举个例子：  </p>
+<blockquote>
+<p>A导致了B就是最简单的因果性例子.<br><img src="http://i1.fuimg.com/711106/d8fd67b53004c4f2.png" alt="avatar"><br>统计学上把两个或者多个看起来高度相关，但却不存在因果性的现象叫做伪相关（spurious correlation). 而伪相关的成因可能有：</p>
+</blockquote>
+<blockquote>
+<ol>
+<li><p>存在其他变量（common response variables)同时对这两个事件造成（直接或间接的）影响，但我们无法观测到（意识到）它的存在。举个简单的例子，与冬天相比，夏天有用的人变多且溺亡人数上升，同事吃冰激凌的人也增多，因此是否“吃冰激凌”会导致“溺亡”？<br>这种听起来荒谬的结论就是因为我们错误的把相关性当成了因果性。我们没有观测到“夏天气温升高”同时会影响“游泳溺亡人数”和“吃冰激凌人数”。而错误地认为两者兼有直接的因果关系。要时刻记着“相关性”不是“因果性”的充要条件。<br><img src="http://i1.fuimg.com/711106/04c4856fff25426a.png" alt="avatar"><br>在上面的例子中，C就是季节，而A和B就是“游泳溺亡人数”和“吃冰激凌人数”。可以直观的看出，A与B之间并不存在因果相关。  </p>
+</li>
+<li><p>纯属巧合，尤其是处理小样本时。</p>
+</li>
+</ol>
+</blockquote>
+<p>解释完“相关性并不意味着因果关系”，天天和数据打交道的小伙伴，比如互联网行业的数据运营，不少数据分析的工作其实都围绕着这个问题，举一些例子:</p>
+<ul>
+<li>在头条里刷到一个新推荐策略的内容的用户留存更高，他们的高留存是因为这个推荐策略导致的吗，这个策略究竟对留存的提升有多大效果？  </li>
+<li>上周投放了某游戏广告的用户登录率更高，他们的高登录有多大程度是由于他们本身就是高潜力用户？  </li>
+<li>….  </li>
+</ul>
+<p>在这些例子中，本质上，我们都想要分析一个干预（treatment）对一个结果（outcome）有怎样的影响，想要探究其中的因果效应。大家熟悉的A/B Test是回答上面这些问题的黄金方式。但其实A/B test是有很多局限性的，这里我不想讨论A/B test的局限性，因为在我看来更多无非是成本问题，而不是影响结果好坏的问题。首先我们来看一下A/B test是怎么做的：</p>
+<center>![avatar](http://i2.tiimg.com/711106/89bd0fd400e257a2.png)</center>
+
+<p>上面描述的过程很简单，就是在互联网大数据的场景下，基于随机流量去随机的分出A组和B组用户进行实验。这里我要强调的就是这个<u>随机</u>二字。为什么说它很重要呢？因为随机性保证了两组用户的同质性，换句话说A组中有一定老年人的比例，那么这个随机性就保证了B组中也会有同样比例的老年人出现。这个前提假设叫做可忽略性假设（Ignorability），假设对于pre-treatment变量X一样的两组人群人群，是否接受处理和潜在结果相互独立： Y<sub>0</sub>,Y<sub>1</sub>&perp;T | X. 这个假设保证了A/B test的合理性以及结果的可靠性。<br>我们用公式来解释一下这个事情：</p>
+<center>Y<sub>1</sub>=  &beta;<sub>0</sub> + &beta;<sub>1</sub>T<sub>1</sub> +  &epsilon;<sub>1</sub></center>  
+上面公式中的T<sub>1</sub>是收到干预的意思，也叫干预特征。Y则是收到干预后的结果，&beta;<sub>0</sub>是被随机性控制住的pre-treatment变量X的代表，&beta;<sub>1</sub> 是我们要估计的因果效应，&epsilon;<sub>1</sub>这是一个扰动项。在保证 X 随机性时候，这个扰动项只和 T 这个干预项的随机性有关，我们是可以忽略不计的。  
+
+<p>在日常工作中，或者说在很多非互联网行业，并非所有数据分析都有A/B test撑腰。我们往往需要通过观察历史数据完成分析，这类分析称为“观察性研究”。在观察性研究中，失去了“随机流量”撑腰，现实就没有那么美好了。这时上图中<code>随机分组</code>就不存在了，而是历史数据已经存在分好的组。这两者有什么区别呢？这个就要讲到样本的内生性问题，这个理解起来比较抽象，我尽量去解释。与随机分组对应的是历史观察数据存在着“自我选择”我们叫self-select。就是说干预特征为 1 的样本并不是我们通过随机流量分组后进行干预标上去的，而很大可能是因为样本本身就倾向于产生干预项 T=1 的行为（年轻人本身就更大概率去点开广告）。A组和B组样本在pre-treatment变量 X 上是不一样的，不符合Ignorability假设。回到公式中，此时的扰动项 &epsilon;<sub>1</sub> 不再单受 T 影响，同时收到了 X 不同质的影响，不能忽略不计，这就对我们&beta;<sub>1</sub> 的因果效应估计产生了很大的影响。 </p>
+<p>因此，研究如何利用手边已有的历史数据进行“因果分析”变得无比重要。</p>
+<p>##What Do We Wanna Infer From Data?<br>在讲因果推断怎么做之前，我们先要搞清楚因果推断的是什么？有人说是因果效应（causal effect),但这个词是不是太笼统了没有办法量化。接受因果效应的量化前，我们需要定义一些符号：</p>
+<ul>
+<li><p>两组样本标识{A,B}： A组样本和B组样本。  </p>
+</li>
+<li><p>干预（treatment) T: 一般我们考虑二值干预，用 T<sub>i</sub> &in; 0,1来指示用户是否受到了某种干预。</p>
+</li>
+<li><p>潜在结果（potential outcome）{Y’<sub>1</sub>,Y’<sub>0</sub>}:对每个样本，它们是否受到干预分别有两个潜在结果，这里的潜在意味着反事实counterfactual.</p>
+</li>
+<li><p>观察结果 {Y<sub>1</sub>,Y<sub>0</sub>}：这里就是客观事实了。  </p>
+</li>
+</ul>
+<p>下面我们看怎么量化因果效应，我们通常关心两种“因果效应”：</p>
+<ul>
+<li>平均因果效应（Average Treatment Effect, ATE): ATE为干预对所有人的平均因果效应。ATE = E[Y<sub>1</sub> - Y<sub>0</sub>] 我们来继续拆解这个公式： </li>
+</ul>
+<center>ATE = (E[Y<sub>A,1</sub>|T=1] - E[Y'<sub>A,0</sub>|T=0]) + (E[Y'<sub>B,1</sub>|T=1] - E[Y<sub>B,0</sub>|T=0])</center>
+
+<p>因为E[Y’A,0|T=0]和(E[Y’B,1|T=1]实际是不可能发生的，因为一个样本不可能同时观察到干预和不干预两种结果，所以这两项实际是不存在的(counterfactual)在A/B test因为分组随机性所以默认：</p>
+<center>E[Y<sub>A,1</sub>|T=1] == E[Y'<sub>B,1</sub>|T=1] is True  
+E[Y'<sub>A,0</sub>|T=0] == E[Y<sub>B,0</sub>|T=0] is True</center>  
+
+<center>ATE = E[Y<sub>A,1</sub>|T=1] -  E[Y<sub>B,0</sub>|T=0]</center>
+
+<ul>
+<li>干预组的平均因果效应（Average Treatment Effect on the Treated, ATT): ATT = E[Y<sub>1</sub> - Y<sub>0</sub> | T=1], 我们也来进一步解析这个公式：<center>ATT = E[YA,1|T=1] - E[Y'A,0|T=0]</center>  
+
+</li>
+</ul>
+<p>同上，在A/B test 中E[Y’A,0|T=0]实际是不存在的，我们只能用B组样本中的E[Y<sub>B,0</sub>|T=0]来代替。这里同样用到了：</p>
+<center>E[Y'<sub>A,0</sub>|T=0] == E[Y<sub>B,0</sub>|T=0] is True</center>  
+这个假设。这个假设也就是上一个session提到的消除样本内生性的可忽略性假设（Ignorability):Y<sub>0</sub>,Y<sub>1</sub>&perp;T | X, 我们只有保证pre-treatment变量 X 尽可能一致才可以满足上述假设。
+
+<p>##How Do We Apply Causal Inference<br>我们上面已经说过了，观察性研究中做因果推理最重要的是让A,B两组 X 变量满足同质性假设。这里先说几个传统的做法吧，因为我自己也是现学现卖，Rubin的书还没有翻几页：</p>
+<h3 id="Matching-Methods"><a href="#Matching-Methods" class="headerlink" title="Matching Methods"></a>Matching Methods</h3><p>这个也比较好理解，就是拿一个样本找 X 相同的/相似的另外一个样本（自己的分身，匹配成一对儿分别放在实验组和对照组中。</p>
+<ul>
+<li><strong>Exact Matching</strong>: 虽然直观，但并不实用。“匹配用户的变量 X 完全相等“ 这个要求过于严格。我们的实际工业场景 X 的维度相当高，样本量有限，几乎不可能有足量的匹配样本来下结论。</li>
+<li><strong>Coarse Matching</strong>: 我理解这应该是Exact Matching 一个直观变种，我们对每一个T = 1 的样本匹配一个距离最近且不超过阈值的用户。不过，难点在于这里的“距离”如何定义、“阈值”如何定义，需要很多斟酌，本人也是在工作中遇到这样的难题，一时找不到答案又鄙视拍脑袋的做法哈哈。</li>
+</ul>
+<p>那么为了科学有效地进行Matching, 一个经典做法是利用Propensity Score  </p>
+<p><strong>Propensity Score</strong>: The propensity score is the probability of receiving treatment, rather than controal, given covariates X.  </p>
+<p>怎么理解呢？”样本接受干预的概率“ 是不是很抽象。它认为每一个样本自身都有接受干预 T 的一个概率，也可以叫做内生性。只有两个样本接受 T 的概率一样，在我施加 T 后的区别才是真正来自 T 的影响。如果同时推送给一个年轻女性和小孩一个化妆品广告，本身一个女性受干预的可能性（概率）就远远大于小孩，这时得出该广告可以增加收益就是不可靠的结论。那么propensity score就是给每一个样本计算的一个受干预概率值。具有相同概率值的样本匹配到一起，分在实验组和对照组。也就是说实验组有这么多的女性和小孩，对照组也要有这么多的女性和小孩。所以propensity score又叫做balancing score, 用来平衡两个组间的样本差异。<br>基于propensity score的一般方法有哪些呢：</p>
+<ul>
+<li>Matching</li>
+<li>Weighting</li>
+<li>Doubly Robust</li>
+</ul>
+<p>具体方法我会放在后面的文章单独讲，因为我自己还没有完全搞明白哈哈。但是基于Propensity Score的这些传统方法是存在问题的，首先有人一定会问这个概率值怎么算呢？ 我所知道的大部分是基于ML拟合估计的，这里细节我以后会说，总之这样做的问题是：  </p>
+<ol>
+<li>基于模型估计的propensity score是依赖于模型假设的。什么是模型假设？回去慢慢学吧。简单举个例子：LR的几个模型假设是label服从伯努利分布，特征服从高斯分布。</li>
+<li>基于propensity score的匹配方法把除了outcome和T以外的其他特征都当成了混淆变量（confounders)，并且赋予了一样的权重，这明显是不合理的。并不是所有 X 都影响干预和outcome。</li>
+</ol>
+<p>所以目前该领域这两年最前沿的研究也是在解决上面两个问题。例如：</p>
+<ul>
+<li>模型无关的、无参的confounder平衡算法，使用confounder的高阶moment。</li>
+<li>使用数据驱动的变量分解，不在把所有变量都当作confounder。</li>
+<li>区分不同confounder的影响以及量化他们带来的扰动因子。</li>
+</ul>
+<p>细节要继续看论文才能明白啊。。。</p>
+<p>##Conclusion<br>主要讲了因果推断的由来，以及使用场景。总的来讲：目标就是量化因果效应。方法的难点主要围绕在平衡混淆变量，后面细节的方法介绍也主要围绕这个难点展开。</p>
+<p>##参考资料</p>
+<ol>
+<li>【<strong>教材</strong>】Causal Inference for Statistics, Social, and Biomedical. Sciences: An Introduction. Guido W. Imbens and. Donald B. Rubin.</li>
+<li>【<strong>教材</strong>】Causal Inference: The Mixtape. Scott Cunningham.</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://www.qqtouxiang.com/d/file/tupian/mx/20170713/jitdbe00jpfpd.jpg"
+                alt="Shawn_Song" />
+            
+              <p class="site-author-name" itemprop="name">Shawn_Song</p>
+              <p class="site-description motion-element" itemprop="description">A way of self-cultivation of young data scientist</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shawn_Song</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
