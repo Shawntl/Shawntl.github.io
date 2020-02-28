@@ -1823,7 +1823,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #13994f;
+  background: #909f73;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2749,13 +2749,13 @@ pre .javascript .function {
   padding-right: 260px;
 }
 header {
-  width: 80% !important;
+  width: 70% !important;
 }
 header.post-header {
   width: auto !important;
 }
 .container .main-inner {
-  width: 80%;
+  width: 70%;
 }
 .content-wrap {
   width: calc(100% - 260px);
@@ -2782,12 +2782,12 @@ header.post-header {
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .content-wrap {
-    width: 80% !important;
+    width: 70% !important;
   }
 }
 @media (max-width: 767px) {
   .content-wrap {
-    width: 80% !important;
+    width: 70% !important;
   }
 }
 .site-brand-wrapper {
