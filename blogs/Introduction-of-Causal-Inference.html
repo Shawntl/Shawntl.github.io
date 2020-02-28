@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Inference," />
+  <meta name="keywords" content="," />
 
 
 
@@ -80,9 +80,9 @@
 
 
 <meta name="description" content="Motivation刚刚搭建完个人博客网站（虽然搞强化学习的时候就有这个想法了。。哈哈，不过现在也不晚）。最近在学习因果推断，就干脆把这个内容当作自己博客的第一个专题吧。接触统计这么多年发现因果推断这个东西起因还是“stable learning”。">
-<meta property="og:type" content="article">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Introduction of Causal Inference">
-<meta property="og:url" content="http://yoursite.com/2020/02/28/Introduction-of-Causal-Inference/index.html">
+<meta property="og:url" content="http://yoursite.com/blogs/Introduction-of-Causal-Inference.html">
 <meta property="og:site_name" content="Shawn&#39;s Blog">
 <meta property="og:description" content="Motivation刚刚搭建完个人博客网站（虽然搞强化学习的时候就有这个想法了。。哈哈，不过现在也不晚）。最近在学习因果推断，就干脆把这个内容当作自己博客的第一个专题吧。接触统计这么多年发现因果推断这个东西起因还是“stable learning”。">
 <meta property="og:locale" content="en_US">
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/02/28/Introduction-of-Causal-Inference/"/>
+  <link rel="canonical" href="http://yoursite.com/blogs/Introduction-of-Causal-Inference.html"/>
 
 
 
@@ -255,119 +255,24 @@
 
   <div id="posts" class="posts-expand">
     
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/Introduction-of-Causal-Inference/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shawn_Song">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://www.qqtouxiang.com/d/file/tupian/mx/20170713/jitdbe00jpfpd.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shawn's Blog">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">Introduction of Causal Inference</h1>
-        
+	<h1 class="post-title" itemprop="name headline">Introduction of Causal Inference</h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-02-28T10:54:51+08:00">
-                2020-02-27
-              </time>
-            
 
-            
 
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Statistics/" itemprop="url" rel="index">
-                    <span itemprop="name">Statistics</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Statistics/blogs/" itemprop="url" rel="index">
-                    <span itemprop="name">blogs</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</header>
 
       
       
-
       
-        <h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>刚刚搭建完个人博客网站（虽然搞强化学习的时候就有这个想法了。。哈哈，不过现在也不晚）。最近在学习因果推断，就干脆把这个内容当作自己博客的第一个专题吧。接触统计这么多年发现因果推断这个东西起因还是“stable learning”。  </p>
+      <div class="post-body">
+        
+        
+          <h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>刚刚搭建完个人博客网站（虽然搞强化学习的时候就有这个想法了。。哈哈，不过现在也不晚）。最近在学习因果推断，就干脆把这个内容当作自己博客的第一个专题吧。接触统计这么多年发现因果推断这个东西起因还是“stable learning”。  </p>
 <a id="more"></a>  
 <p>假如当前面临的工业场景就是样本量很小，三位数的级别，但又想要在大样本上利用机器学习得到泛化，这个样本有多大呢？ 大概是五位数到七位数。这几乎是<strong>绝对不可能</strong>泛化的。因为机器学习（ML）模型的学习误差收敛速率与样本量成正比，样本量越大，模型收敛速度越快。而当数据集已经非常大且具有代表性时，没有必要做统计检验。举个简单列子，如果有世界上百分之99人的图片，并用其预测剩下百分之1的人的性别。那么在99%数据上表现足够好的模型应该就是最好的，不必在多此一举做统计假设。  </p>
 <p>而统计学用假设检验是：在样本量足够少的前提下，为了推断出置信度足够高的总体分布。  </p>
@@ -477,47 +382,15 @@
 <li>【<strong>教材</strong>】Causal Inference: The Mixtape. Scott Cunningham.</li>
 </ol>
 
+        
+      </div>
+      
+      
       
     </div>
     
     
     
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Inference/" rel="tag"># Inference</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
