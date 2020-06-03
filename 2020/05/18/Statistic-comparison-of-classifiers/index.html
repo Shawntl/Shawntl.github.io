@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="写作背景最近工作中接到要评价多个机器学习分类器性能的任务。不知道在互联网这样的行业是否会有严格进行多个分类器进行比较的必要？但这件事在学术界还是有相对完整的一套体系的。而在生物医药这样的行业，私以为严谨就显得更加重要。我就在本文中大致分享一下： 有了实验评估方法和性能度量，看起来就能对学习器的性能进行评估比较了：先使用某种实验评估方法测得学习器的某个性能度量结果， 然后对这些结果进行比较。但怎么来">
+<meta name="description" content="写作背景最近工作中接到要评价多个机器学习分类器性能的任务。不知道在互联网这样的行业是否会有严格进行多个分类器进行比较的必要？但这件事在学术界还是有相对完整的一套体系的。而在生物医药这样的行业，私以为严谨就显得更加重要。我就在本文中大致分享一下：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Statistical Comparisons of Classifiers">
 <meta property="og:url" content="http://yoursite.com/2020/05/18/Statistic-comparison-of-classifiers/index.html">
 <meta property="og:site_name" content="Shawn&#39;s Blog">
-<meta property="og:description" content="写作背景最近工作中接到要评价多个机器学习分类器性能的任务。不知道在互联网这样的行业是否会有严格进行多个分类器进行比较的必要？但这件事在学术界还是有相对完整的一套体系的。而在生物医药这样的行业，私以为严谨就显得更加重要。我就在本文中大致分享一下： 有了实验评估方法和性能度量，看起来就能对学习器的性能进行评估比较了：先使用某种实验评估方法测得学习器的某个性能度量结果， 然后对这些结果进行比较。但怎么来">
+<meta property="og:description" content="写作背景最近工作中接到要评价多个机器学习分类器性能的任务。不知道在互联网这样的行业是否会有严格进行多个分类器进行比较的必要？但这件事在学术界还是有相对完整的一套体系的。而在生物医药这样的行业，私以为严谨就显得更加重要。我就在本文中大致分享一下：">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://i2.tiimg.com/711106/4870957db45724e6.png">
 <meta property="og:image" content="http://i2.tiimg.com/711106/34507a98ab89a839.png">
@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://i2.tiimg.com/711106/cdb90d693cb3fc3b.png">
 <meta property="og:image" content="http://i2.tiimg.com/711106/940d7aa866cc083d.png">
 <meta property="article:published_time" content="2020-05-18T01:54:51.000Z">
-<meta property="article:modified_time" content="2020-06-03T06:30:22.397Z">
+<meta property="article:modified_time" content="2020-06-03T06:47:30.951Z">
 <meta property="article:author" content="Shawn_Song">
 <meta property="article:tag" content="Statistic Inference">
 <meta name="twitter:card" content="summary">
@@ -361,6 +361,7 @@
 
       
         <h1 id="写作背景"><a href="#写作背景" class="headerlink" title="写作背景"></a>写作背景</h1><p>最近工作中接到要评价多个机器学习分类器性能的任务。不知道在互联网这样的行业是否会有严格进行多个分类器进行比较的必要？但这件事在学术界还是有相对完整的一套体系的。而在生物医药这样的行业，私以为严谨就显得更加重要。我就在本文中大致分享一下：</p>
+<a id="more"></a> 
 <p>有了实验评估方法和性能度量，看起来就能对学习器的性能进行评估比较了：先使用某种实验评估方法测得学习器的某个性能度量结果， 然后对这些结果进行比较。但怎么来做这个比较呢？是直接取得性能度量的值然后“比较大小”吗？实际上，机器学习中性能比较这件事比大家想象的复杂得多，这里面涉及几个重要因素：首先， 我们希望比较的是泛化性能，然而通过实验评估方法我们获得的是测试集上的性能，两者的对比结果可能未必相同；第二， 测试集上的性能与测试集本身的选择有很大关系，且不论使用不同大小的测试集会得到不同的结果，即便用相同大小的测试集，若包含的测试集样例不同，测试结果也会不同；第三，很多机器学习算法本身有一定的随机性，即便用相同的参数设置在同一个测试集上多次运行，其结果也会有不同。那么有没有适当的方法对学习器性能进行比较呢？</p>
 <p>统计假设检验（hypothesis test)为我们进行学习器性能比较提供了重要依据。显著性检验是统计学里的工具，被广泛应用到社会科学，心理学，经济学等很多学科中的研究中，当然也包括计算机科学，平常看论文偶尔也会遇到假设检验。</p>
 <p>但必须承认的是，这几年，无论是CV、NLP还是数据挖掘，大部分论文里面都鲜有做假设检验的。绝大多数情况下，作者都只会给出对比实验的结果，根据研究的问题会涉及到3～10个数据集不等，如果在所有数据集上都能优于之前的SOTA, 那就claim自己的算法/模型更优。顶会的oral甚至最佳论文亦是如此。</p>
