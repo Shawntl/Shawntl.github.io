@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Inference," />
+  <meta name="keywords" content="Statistic Inference," />
 
 
 
@@ -86,15 +86,15 @@
 <meta property="og:site_name" content="Shawn&#39;s Blog">
 <meta property="og:description" content="Motivation刚刚搭建完个人博客网站（虽然搞强化学习的时候就有这个想法了。。哈哈，不过现在也不晚）。最近在学习因果推断，就干脆把这个内容当作自己博客的第一个专题吧。接触统计这么多年发现因果推断这个东西起因还是“stable learning”。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://i1.fuimg.com/711106/d8fd67b53004c4f2.png">
-<meta property="og:image" content="http://i1.fuimg.com/711106/04c4856fff25426a.png">
-<meta property="og:image" content="http://i2.tiimg.com/711106/89bd0fd400e257a2.png">
+<meta property="og:image" content="https://i2.tiimg.com/711106/dfd68659570306ae.png">
+<meta property="og:image" content="http://i1.fuimg.com/711106/1e44d178fcb99e74.png">
+<meta property="og:image" content="http://i2.tiimg.com/711106/9cca83da12574721.png">
 <meta property="article:published_time" content="2020-02-28T02:54:51.000Z">
-<meta property="article:modified_time" content="2020-02-28T17:24:47.645Z">
+<meta property="article:modified_time" content="2020-06-03T06:41:02.803Z">
 <meta property="article:author" content="Shawn_Song">
-<meta property="article:tag" content="Inference">
+<meta property="article:tag" content="Statistic Inference">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://i1.fuimg.com/711106/d8fd67b53004c4f2.png">
+<meta name="twitter:image" content="https://i2.tiimg.com/711106/dfd68659570306ae.png">
 
 
 
@@ -365,14 +365,14 @@
 <p>很多人可能一开始会将因果性和相关性搞混，会以为一个变量变高另外一个变量也变高就是因果性，但这是相关性，“相关性并不意味着因果性”，举个例子：  </p>
 <blockquote>
 <p>A导致了B就是最简单的因果性例子.  </p>
-<div align=center><img width="250" height="100" src="http://i1.fuimg.com/711106/d8fd67b53004c4f2.png"/></div>  
+<div align=center><img width="250" height="100" src="https://i2.tiimg.com/711106/dfd68659570306ae.png"/></div>  
 统计学上把两个或者多个看起来高度相关，但却不存在因果性的现象叫做伪相关（spurious correlation). 而伪相关的成因可能有：
 </blockquote>
 <blockquote>
 <ol>
 <li>存在其他变量（common response variables)同时对这两个事件造成（直接或间接的）影响，但我们无法观测到（意识到）它的存在。举个简单的例子，与冬天相比，夏天有用的人变多且溺亡人数上升，同事吃冰激凌的人也增多，因此是否“吃冰激凌”会导致“溺亡”？<br>这种听起来荒谬的结论就是因为我们错误的把相关性当成了因果性。我们没有观测到“夏天气温升高”同时会影响“游泳溺亡人数”和“吃冰激凌人数”。而错误地认为两者兼有直接的因果关系。要时刻记着“相关性”不是“因果性”的充要条件。</li>
 </ol>
-<div align=center><img width="300" height="150" src="http://i1.fuimg.com/711106/04c4856fff25426a.png"/></div>  
+<div align=center><img width="300" height="150" src="http://i1.fuimg.com/711106/1e44d178fcb99e74.png"/></div>  
 </blockquote>
 <blockquote>
 <p>在上面的例子中，C就是季节，而A和B就是“游泳溺亡人数”和“吃冰激凌人数”。可以直观的看出，A与B之间并不存在因果相关。  </p>
@@ -390,7 +390,7 @@
 </li>
 </ul>
 <p>在这些例子中，本质上，我们都想要分析一个干预（treatment）对一个结果（outcome）有怎样的影响，想要探究其中的因果效应。大家熟悉的A/B Test是回答上面这些问题的黄金方式。但其实A/B test是有很多局限性的，这里我不想讨论A/B test的局限性，因为在我看来更多无非是成本问题，而不是影响结果好坏的问题。首先我们来看一下A/B test是怎么做的：</p>
-<div align=center><img width="350" height="250" src="http://i2.tiimg.com/711106/89bd0fd400e257a2.png"/></div> 
+<div align=center><img width="350" height="250" src="http://i2.tiimg.com/711106/9cca83da12574721.png"/></div> 
 
 
 <p>上面描述的过程很简单，就是在互联网大数据的场景下，基于随机流量去随机的分出A组和B组用户进行实验。这里我要强调的就是这个<u>随机</u>二字。为什么说它很重要呢？因为随机性保证了两组用户的同质性，换句话说A组中有一定老年人的比例，那么这个随机性就保证了B组中也会有同样比例的老年人出现。这个前提假设叫做可忽略性假设（Ignorability），假设对于pre-treatment变量X一样的两组人群人群，是否接受处理和潜在结果相互独立： Y<sub>0</sub>,Y<sub>1</sub>&perp;T | X. 这个假设保证了A/B test的合理性以及结果的可靠性。<br>我们用公式来解释一下这个事情：</p>
@@ -482,7 +482,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Inference/" rel="tag"># Inference</a>
+            <a href="/tags/Statistic-Inference/" rel="tag"># Statistic Inference</a>
           
         </div>
       
@@ -606,7 +606,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
