@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Deep Learning," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="写作背景19年毕业后才听说的图神经网络，一个原因是所进入行业存在大量的图结构生物小分子、大分子数据，行业内人员在探求AI技术在该类数据上的信息捕捉能力；另一个原因是学术界的图卷积研究在2019年后呈现爆炸性的增长，相关的基于图的表示学习也陆续进入各大落地场景，诸如：交通网络系统、文本分类检索、推荐系统、信号处理，还有当然就是没有实际意义上落地的生物医药了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spectral Graph Convolutional Neural Networks">
+<meta property="og:url" content="http://yoursite.com/2020/06/24/Spectral-Graph-Convolutional-Neural-Networks/index.html">
+<meta property="og:site_name" content="Shawn&#39;s Blog">
+<meta property="og:description" content="写作背景19年毕业后才听说的图神经网络，一个原因是所进入行业存在大量的图结构生物小分子、大分子数据，行业内人员在探求AI技术在该类数据上的信息捕捉能力；另一个原因是学术界的图卷积研究在2019年后呈现爆炸性的增长，相关的基于图的表示学习也陆续进入各大落地场景，诸如：交通网络系统、文本分类检索、推荐系统、信号处理，还有当然就是没有实际意义上落地的生物医药了。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://i2.tiimg.com/711106/669bc05b96d03038.png">
+<meta property="og:image" content="http://i1.fuimg.com/711106/e23a0a2d943c3b60.png">
+<meta property="og:image" content="http://i1.fuimg.com/711106/6c17858a736d1a31.png">
+<meta property="og:image" content="http://i2.tiimg.com/711106/029764582806e533.png">
+<meta property="og:image" content="http://i1.fuimg.com/711106/5337feaf1d776c94.png">
+<meta property="og:image" content="http://i1.fuimg.com/711106/d1af54e620e957fc.png">
+<meta property="og:image" content="http://i2.tiimg.com/711106/749ce0011bdeda2f.png">
+<meta property="og:image" content="http://i2.tiimg.com/711106/b21a0655eb7ccb3f.png">
+<meta property="og:image" content="http://i1.fuimg.com/711106/b1bb66620c6601f0.png">
+<meta property="article:published_time" content="2020-06-23T18:23:51.000Z">
+<meta property="article:modified_time" content="2020-07-26T08:24:58.080Z">
+<meta property="article:author" content="Shawn_Song">
+<meta property="article:tag" content="Deep Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://i2.tiimg.com/711106/669bc05b96d03038.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/24/Spectral-Graph-Convolutional-Neural-Networks/"/>
+
+
+
+
+
+  <title>Spectral Graph Convolutional Neural Networks | Shawn's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shawn's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Talk is cheap, Show me the data</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-edit"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-clone"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/24/Spectral-Graph-Convolutional-Neural-Networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shawn_Song">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.qqtouxiang.com/d/file/tupian/mx/20170713/jitdbe00jpfpd.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shawn's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spectral Graph Convolutional Neural Networks</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-24T02:23:51+08:00">
+                2020-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="写作背景"><a href="#写作背景" class="headerlink" title="写作背景"></a>写作背景</h1><p>19年毕业后才听说的图神经网络，一个原因是所进入行业存在大量的图结构生物小分子、大分子数据，行业内人员在探求AI技术在该类数据上的信息捕捉能力；另一个原因是学术界的图卷积研究在2019年后呈现爆炸性的增长，相关的基于图的表示学习也陆续进入各大落地场景，诸如：交通网络系统、文本分类检索、推荐系统、信号处理，还有当然就是没有实际意义上落地的生物医药了。<br><a id="more"></a><br>由于生物医药领域的问题定义并转化成算法任务的门槛远远高于传统互联网领域的问题。这也导致我直到现在也无法判断该技术在生物科技领域的应用落地点是否真的存在。所以打算从图卷积的理论基础开始学习，了解它在相关互联网行业的应用后逐渐将任务迁移到其他行业的问题。  </p>
+<p>本文作为图卷积系列知识分享的第一篇文章，主要先介绍最先发展的谱域图卷积，顺带会提到所用到的相关数学基础知识，  </p>
+<p>这篇文章的大纲如下：</p>
+<ol>
+<li>为什么要用图卷积<ul>
+<li>从欧式空间至非欧氏空间 </li>
+</ul>
+</li>
+<li>图谱卷积的背景知识<ul>
+<li>卷积定理</li>
+<li>图傅里叶变换</li>
+<li>拉普拉斯矩阵</li>
+<li>谱域图卷积实现思路</li>
+</ul>
+</li>
+<li>三个经典图谱卷积模型<ul>
+<li>SCNN</li>
+<li>ChebNet</li>
+<li>GCN  </li>
+</ul>
+</li>
+</ol>
+<h1 id="为什么要用图卷积-——欧氏空间至非欧式空间"><a href="#为什么要用图卷积-——欧氏空间至非欧式空间" class="headerlink" title="为什么要用图卷积 ——欧氏空间至非欧式空间"></a>为什么要用图卷积 ——欧氏空间至非欧式空间</h1><p>首先我们知道人工神经网络发展的第三次浪潮是在因为11-12年卷积神经网络在图像识别中的惊人表现，12年后期进入了飞速地发展有两点原因：一是数据爆炸，图像数据、文本数据、语音数据、社交网络数据、科学计算等（很不幸这里并没有生物医药行业！ = =）；二是计算性能大幅提高。 搞AI的人都知道CNN主要优于DNN的一点在于原始数据空间位置信息的局部提取和保留。要做到这一点依赖于一种数学运算——卷积计算。  </p>
+<p><div align=center><img width="450" height="200" src="http://i2.tiimg.com/711106/669bc05b96d03038.png"/></div><br>如上图左，我们在处理语音、图像、视频时往往只需要特定维度的张量作为卷积核在数据上滑动以捕捉特征，因为这样的数据往往是分布在欧氏空间的结构，满足以下两点：  </p>
+<ul>
+<li>卷积只需要处理固定输入维度的数据</li>
+<li>局部输入数据必须是有序的  </li>
+</ul>
+<p>但是一旦我们拓展到非欧式空间，数据结构变成右图这样，当我们设计规则的卷积核时：</p>
+<ul>
+<li>局部输入维度可变</li>
+<li>局部输入排列无序，没有明确的上下左右关系。  </li>
+</ul>
+<p>此时，实际问题可能就需要设计一种卷积核可以在不依赖数据空间分布的情况下，很好的捕捉图结构数据中节点连接交互信息，数学上也叫拓扑连接信息。拓扑结构就是典型地只关心节点之间的连接关系和相对位置，不关乎绝对位置和空间几何形状。所以设计这个卷积核就成为这个问题的核心。  </p>
+<h1 id="图谱卷积的背景知识"><a href="#图谱卷积的背景知识" class="headerlink" title="图谱卷积的背景知识"></a>图谱卷积的背景知识</h1><h2 id="卷积定理"><a href="#卷积定理" class="headerlink" title="卷积定理"></a>卷积定理</h2><p>我们称$(f*g)(n)$为f,g的卷积<br>其连续的定义为：  </p>
+<script type="math/tex; mode=display">(f * g)(n) = \int^{+\infty}_{-\infty}{f(\tau)g(n-\tau)d\tau}\tag{2.1.1}</script><p>其离散定义为：  </p>
+<script type="math/tex; mode=display">(f * g)(n) = \sum^{+\infty}_{\tau=-\infty}{f(\tau)g(n-\tau)}\tag{2.1.2}</script><p>这两个式子有个共同的特征： </p>
+<p><center>$n = \tau +(n-\tau)$</center><br>我在这里放卷积运算的式子并不打算去细讲如何理解卷积。只是为了提醒自己在实际问题中遇到卷积运算可以想起它最基本的运算有助于理解现实场景的意义，触类旁通。<br>为了找到不受欧式空间绝对位置和几何形状制约的卷积核，怎么样把计算从欧式空间域转换到其他的坐标域上呢？这里我们想到了一个定理，就是在数字信号处理领域很重要的算法——傅里叶变换！！根据<strong>卷积定理</strong>，两信号在空域（或者）时域的卷积的傅里叶变换等于这两信号在频域中的傅里叶变换的乘积，即：</p>
+<script type="math/tex; mode=display">\mathcal{F}[f_1(t)*f_2(t)] = F_1(w)\cdot F_2(w)\tag{2.1.3}</script><p>$f(t)$为空域上的信号，$F_1(w)$为频域上的信号。 $\mathcal{F}$为傅里叶变换，*表示卷积，$\cdot$为乘积。<br>也可以写成： </p>
+<script type="math/tex; mode=display">f_1(t) * f_2(t) = \mathcal{F^{-1}}[F_1(w)\cdot F_2(w)]\tag{2.1.4}</script><p>该卷积操作的意义如下：</p>
+<ul>
+<li>将空域信号转换到频域，然后相乘。</li>
+<li>将相乘的结果在转换到空域。  </li>
+</ul>
+<h2 id="图傅里叶变换"><a href="#图傅里叶变换" class="headerlink" title="图傅里叶变换"></a>图傅里叶变换</h2><h3 id="经典傅里叶变换"><a href="#经典傅里叶变换" class="headerlink" title="经典傅里叶变换"></a>经典傅里叶变换</h3><p>现在我们来看卷积定理中的傅里叶变换的运算，经典的傅里叶变换公式如下（这里指呈现离散形式，连续形式主要是将求和换成积分）： </p>
+<script type="math/tex; mode=display">F(w) = \sum^{n}_{t=1}{f(t)e^{-i\frac{2\pi}{n}wt}}\tag{2.2.1}</script><script type="math/tex; mode=display">f(t) = \frac{1}{n}\sum^{n}_{w=1}{F(w)e^{i\frac{2\pi}{n}wt}}\tag{2.2.2}</script><ul>
+<li>傅里叶正变换（2.2.1）的本质是：求线性组合的系数。具体做法是由原函数和基函数的共轭的内积求得。在信号处理领域线性组合的系数就是信号在频域的振幅。</li>
+<li>傅立叶反变换（2.2.2）的本质是：把任意一个函数表示成了若干个正交基函数的线性组合。 </li>
+</ul>
+<h3 id="图傅里叶变换-1"><a href="#图傅里叶变换-1" class="headerlink" title="图傅里叶变换"></a>图傅里叶变换</h3><p>相应的我们希望将卷积定理扩展到图结构的数据上：</p>
+<script type="math/tex; mode=display">x *_Gg = \mathcal{F^{-1}}(F(x) \cdot F(g)) = U(U^Tx \cdot U^Tg)\tag{2.2.3}</script><p><div align=center><img width="450" height="200" src="http://i1.fuimg.com/711106/e23a0a2d943c3b60.png"/></div><br>$x$为图上的每个节点上的输入信号大小，可以理解为每个节点上的特征向量组成的张量，$\ast_{G}$为图卷积，g为卷积核也是我们后面讲的<strong>模型</strong>。恒等式最右边的U是什么呢，我们可以发现它主要对应的是公式（2.2.1）中的基函数$e^{-i\frac{2\pi}{n}wt}$, 所以在这里我们的问题变成：<strong>找到一组基函数表示的坐标系，可以在另外一个（频）域上表征原空间域上的图结构相关的拓扑连接信息，这样该组基坐标系就可以将节点上的特征向量线性变换到新的域中表达</strong>   </p>
+<h2 id="拉普拉斯矩阵"><a href="#拉普拉斯矩阵" class="headerlink" title="拉普拉斯矩阵"></a>拉普拉斯矩阵</h2><p>这里必须要提到编码图拓扑连接结构信息的一种非常重要的矩阵——拉普拉斯矩阵。<br>拉普拉斯矩阵的定义：度矩阵减邻接矩阵  </p>
+<p><div align=center><img width="550" height="250" src="http://i1.fuimg.com/711106/6c17858a736d1a31.png"/></div><br>我们可以看到拉普拉斯矩阵所包含的信息，行数列数代表了节点个数，每一行（列）可以看作是对一个节点周围拓扑连接信息的n维空间向量表示。从线性代数的角度理解，这样的图拓扑连接信息代表空间中一组固定的线性变换，这个线性变换是以正交的笛卡尔坐标系为基准的。我们刚说了，要找到另外一组基函数来表示这个线性变换，基准坐标系依然是正交的笛卡尔坐标系。<br>这里就需要一些线性代数的基本功了，矩阵在几何空间的本质含义是一组线性变换，而它经过特征分解后对应的特征向量是该线性变换对应的另外一组基底坐标系表示，这组基底坐标系特殊在于当线性变换发生时，这些特征向量所在坐标轴只发生了伸缩而没有发生旋转。而每个特征向量对应的伸缩量就是特征值。<br>而图的拉普拉斯矩阵是一个特殊的矩阵，它是对称半正定矩阵（不知道的回去复习线代吧），经过简单的推导就可以证明：对任意向量 $f = [f_1, f_2,…,f_n ]^T$ 有</p>
+<script type="math/tex; mode=display">f^TLf = \frac{1}{2}(\sum^{n}_{i,j=1}{W_{ij}(f_i-f_j)^2})\geq0\tag{2.2.4}</script><p>拉普拉斯矩阵的特征分解叫做谱分解，重要应用有图谱卷积、谱聚类（这个我有空会在另外一篇文章中讲）。主要解释是它的谱分解所得到一组特征向量我们叫做：在谱域（特征基）坐标系下表示原L矩阵代表的线性变换（拓扑连接信息）。特征值则相应代表各坐标轴（特征向量方向）上的“信号”谱域振幅。  </p>
+<script type="math/tex; mode=display">L = U \Lambda U^{-1}\tag{2.2.5}</script><p>$ U = (\vec{u_1}, \vec{u_2}, …, \vec{u_n})$对应对角线上的n个特征值。作为对称半正定矩阵，拉普拉斯矩阵有如下性质：  </p>
+<ul>
+<li>n阶对称矩阵一定有n个线性无关的特征向量。（对称矩阵性质）n维线性空间中的n个线性无关的向量都可以构成它的一组基（矩阵论知识）</li>
+<li>对称矩阵的不同特征值对应的特征向量相互正交，这些正交的特征向量构成的矩阵为正交矩阵。</li>
+<li>实对称矩阵的特征向量一定是实向量。</li>
+<li>半正定矩阵的特征值一定非负。</li>
+</ul>
+<h2 id="谱域图卷积实现思路"><a href="#谱域图卷积实现思路" class="headerlink" title="谱域图卷积实现思路"></a>谱域图卷积实现思路</h2><p>综上我们就找到了图傅里叶变换对应的基函数为图拉普拉斯矩阵的特征向量，任意图上的信号大小（节点特征）可以表示为：</p>
+<p><div align=center><img width="550" height="250" src="http://i2.tiimg.com/711106/029764582806e533.png"/></div><br>上面的公式对应的是图傅里叶反变换（把任意一个函数表示成了若干个正交基函数的线性组合），这里x为空域上的图节点特征，U代表的拉普拉斯矩阵的特征向量基对应正交基函数，$\hat{x}$ 为这组正交基的线性组合系数，经典傅里叶变换中为振幅（频率），而在这里我们可以理解为在每个特征基方向的缩放大小。对应的图傅里叶正变换为：</p>
+<script type="math/tex; mode=display">\hat{x} = U^Tx</script><p>该公式表示空间域到谱域的转换。然后我们讲这些结果带到（2.2.3）式中分析：</p>
+<p><div align=center><img width="550" height="150" src="http://i1.fuimg.com/711106/5337feaf1d776c94.png"/></div><br>同时，我们并不关心空间域上的滤波器信号是什么样子的，因为就是设计不出来才转换到谱域上的嘛 哈哈， 我们只关心其在频率（谱）域的情况。令$g_\theta = diag(U^Tg)$, 公式等价的转换成下式：  </p>
+<p><div align=center><img width="550" height="100" src="http://i1.fuimg.com/711106/d1af54e620e957fc.png"/></div><br>谱域图卷积核心就是在卷积核$\hat{g}(\lambda)$上做文章，在原信号的系数分量上放大或者缩小，因为拓扑连接关系已经用U记录下来了，所以我们的模型就是要你和这个特征基函数在谱域上对应的伸缩系数。  </p>
+<h1 id="三个经典图谱卷积模型"><a href="#三个经典图谱卷积模型" class="headerlink" title="三个经典图谱卷积模型"></a>三个经典图谱卷积模型</h1><p>先上结论：</p>
+<ul>
+<li>三个图谱卷积模型（SCNN、ChebNet、GCN）均立足于图谱理论且一脉相承。  </li>
+<li>ChebNet可看作是SCNN的改进，GCN可看作ChebNet的改进。</li>
+<li>三个模型均可认为是基于上一小节谱域卷积实现思路公式下的一个特例。</li>
+</ul>
+<h2 id="SCNN"><a href="#SCNN" class="headerlink" title="SCNN"></a>SCNN</h2><p>SCNN的核心思想是用<strong>可学习的对角矩阵来代替谱域的卷积核，从而实现图卷积操作</strong>。即：</p>
+<p><div align=center><img width="550" height="150" src="http://i2.tiimg.com/711106/749ce0011bdeda2f.png"/></div><br>具体公式定义如下： </p>
+<script type="math/tex; mode=display">x_{k+1,j} = h(U\sum^{C_{k-1}}_{i=1}{F_{k,i,j}U^{T}x_{k,i}})  (j=1...C_k)\tag{3.1.1}</script><p>其中，$C_k$表示神经网络第k层的channel（通道）个数，$x_{k,i}\in R^n$表示第k层的第i个channel的feature map, channel数代表节点上样本的特征维度。 $F_{k,i,j} \in R^{n \times n}$代表参数化的谱域的卷积核矩阵。它是一个对角矩阵，包含了n个可学习的参数。$h(\cdot)$是激活函数。注意这里为什么论文中说SCNN是半监督的，包括后面两个模型，因为feature map上的样本并不是每一个都有对应的y_true label,一部分是要预测的节点。这里遵循的原理就是通过有y_true的节点反向传播更新整体谱域空间的参数，他们之间的联系靠的是U这个代表连接信息的基底，这个思想非常像推荐系统中的矩阵分解funkSVD，通过user-item矩阵中的协同过滤关系，使用矩阵中已知量拟合推出未知量。所以论文中把这个叫半监督，其实名字具体名字不用太纠结，大致意思是在有分布假设的基础上用已知label数据给未知label样本上标签。  </p>
+<h3 id="SCNN的缺点"><a href="#SCNN的缺点" class="headerlink" title="SCNN的缺点"></a>SCNN的缺点</h3><ul>
+<li>计算拉普拉斯矩阵的特征值分解非常耗时。计算复杂度为$O(n^{3})$,n为节点个数，想想特征分解过程，求一个$n \times n$矩阵的行列式为零时间复杂度。当处理大规模图数据时，比如社交网络数据，通常有上百万个节点，会面临很大的挑战。</li>
+<li>模型的参数复杂度较大，计算复杂度为$O(n)$,当节点数较多时容易过拟合。</li>
+<li>无法保证捕捉局部链接信息，将所有点直接转换到谱域，是个全局连接。  </li>
+</ul>
+<h2 id="ChebNet"><a href="#ChebNet" class="headerlink" title="ChebNet"></a>ChebNet</h2><p>ChebNet的核心思想是为了解决SCNN的缺点，采用切比雪夫多项式代替（逼近）谱域的卷积核函数！  </p>
+<p><div align=center><img width="550" height="150" src="http://i2.tiimg.com/711106/b21a0655eb7ccb3f.png"/></div><br>这个思想来源主要是数学里用多项式去逼近函数，ChebNet认为谱域的卷积核$\hat{g}(\lambda)$是特征值的函数，可以用chebshev多项式逼近，至于chebshev多项式是什么可以自行去查找，这里不细讲了：</p>
+<script type="math/tex; mode=display">p(x) = \beta_0 + \beta_1x + \beta_2x^2 + ...+\beta_kx^K</script><script type="math/tex; mode=display">p(x) = \beta_0T_0(x) + \beta_1T_1(x) + \beta_2T_2(x) + ...+\beta_kT_K(x)</script><script type="math/tex; mode=display">
+\begin{split}
+x *_Gg_\theta &=& Ug_\theta U^Tx \\
+&=& U\sum^{K}_{k=0}{\beta{k}T_k(\hat{\Lambda})U^Tx} \\
+&=& \sum^{K}_{k=0}{\beta{k}T_k(U\hat{\Lambda}U^T)x} \\
+&=& \sum^{K}_{k=0}{\beta{k}T_k(\hat{L})x}
+\end{split}\tag{3.2.1}</script><p>ChebNet的精髓之处就在上面的推导，一个是利用了多项式逼近，另外一点是利用了U正交矩阵的性质，$UU^T=I$. 求和符号上的K是超参数，是你逼近函数所用多项式的最高次数。这样就很好地使卷积核只有K+1个可学习的参数，一般K远小于n，参数的复杂度被大大降低。采用Chebshev多项式代替谱域的卷积核后，经过公式推导，ChebNet不需要对拉普拉斯矩阵做特征分解了。省略了最耗时的步骤。而且，此时的卷积核具有严格的空间局部性。同时，K就是卷积核的“感受野半径”。即将中心顶点K阶紧邻节点作为领域节点。  </p>
+<h2 id="GCN"><a href="#GCN" class="headerlink" title="GCN"></a>GCN</h2><p>GCN的核心思想可以视为对ChebNet的进一步简化。仅仅考虑一阶切比雪夫多项式，且每个卷积核仅仅只有一个参数。即K=1：</p>
+<script type="math/tex; mode=display">g_\theta(\Lambda) = \sum^{1}_{k=0}{\beta_kT_k(\hat{\Lambda})}\tag{3.3.1}</script><p><div align=center><img width="550" height="200" src="http://i1.fuimg.com/711106/b1bb66620c6601f0.png"/></div><br>到这里，我们进一步简化，使得每个卷积核只有一个可学习的参数。令$\beta_0=-\beta_1=\theta$那么：</p>
+<script type="math/tex; mode=display">x *_Gg_\theta = (\beta_0-\beta_1(D^{-\frac{1}{2}}WD^{-\frac{1}{2}}))x = (\theta(D^{-\frac{1}{2}}WD^{\frac{1}{2}}+I_n))x</script><p>因为矩阵$D^{-\frac{1}{2}}WD^{\frac{1}{2}}+I_n$有范围[0,2]的特征值，如果在深度神经网络模型中使用该算子，则反复应用该算子会导致数值不稳定（发散）和梯度爆炸/消失，为了解决该问题，引入了一个renormalization trick：</p>
+<script type="math/tex; mode=display">
+\begin{split}
+D^{-\frac{1}{2}}WD^{\frac{1}{2}}+I_n \rightarrow \tilde{D}^{-\frac{1}{2}}\tilde{W}\tilde{D}^{\frac{1}{2}}+I_n \\
+\tilde{W} = W +I_n \quad \tilde{D}_{ii} = \sum_{i}{\tilde{W}_{ij}}
+\end{split}</script><p>最终公式：</p>
+<script type="math/tex; mode=display">x *_Gg_\theta = \theta(\tilde{D}^{-\frac{1}{2}}\tilde{W}\tilde{D}^{\frac{1}{2}})x\tag{3.3.2}</script><p>在忽略input channel和output channel的情况下，卷积核只有1个可学习的参数，极大的减少了参数量。虽然卷积核大小减少了，但是作者认为通过多层堆叠GCN，仍然可以起到扩大感受野的作用。与此同时，这样的极端削减参数也受到一些人的质疑。他们认为每个卷积核如果只设置一个可学习参数，会降低模型的能力。从目前应用在image的深度学习经验来看，这样的卷积模型复杂度虽然低，但是模型的能力也遭到了削弱，可能难以处理复杂的任务。  </p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>现有图卷积方法大致可以分为谱域图卷积和空域图卷积方法。这篇文章主要介绍谱域图卷积，他其实在实际场景应用是有很大的局限性的。这个我们下一篇引出空域图卷积的时候再讲。总结来说，谱域图卷积根据图谱理论、图傅里叶变换、卷积定理，将数据由空域转换到谱域做处理。有坚实的理论基础。  </p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><p><em>Spectral networks and locally connected networks on graphs. ICLR, 2014</em>  </p>
+</li>
+<li><p><em>Convolutional neural networks on graphs with fast localized spectral filtering. In Advances in neural information processing systems(NIPS),2016</em>  </p>
+</li>
+<li><p><em>Semi-supervised classification with graph convolutional networks. ICLR 2017</em></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/18/Statistic-comparison-of-classifiers/" rel="next" title="Statistical Comparisons of Classifiers">
+                <i class="fa fa-chevron-left"></i> Statistical Comparisons of Classifiers
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://www.qqtouxiang.com/d/file/tupian/mx/20170713/jitdbe00jpfpd.jpg"
+                alt="Shawn_Song" />
+            
+              <p class="site-author-name" itemprop="name">Shawn_Song</p>
+              <p class="site-description motion-element" itemprop="description">A way of self-cultivation of a young data scientist</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Cedit">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Shawntl" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="zheweisong@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写作背景"><span class="nav-number">1.</span> <span class="nav-text">写作背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要用图卷积-——欧氏空间至非欧式空间"><span class="nav-number">2.</span> <span class="nav-text">为什么要用图卷积 ——欧氏空间至非欧式空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图谱卷积的背景知识"><span class="nav-number">3.</span> <span class="nav-text">图谱卷积的背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积定理"><span class="nav-number">3.1.</span> <span class="nav-text">卷积定理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图傅里叶变换"><span class="nav-number">3.2.</span> <span class="nav-text">图傅里叶变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#经典傅里叶变换"><span class="nav-number">3.2.1.</span> <span class="nav-text">经典傅里叶变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图傅里叶变换-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">图傅里叶变换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拉普拉斯矩阵"><span class="nav-number">3.3.</span> <span class="nav-text">拉普拉斯矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#谱域图卷积实现思路"><span class="nav-number">3.4.</span> <span class="nav-text">谱域图卷积实现思路</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三个经典图谱卷积模型"><span class="nav-number">4.</span> <span class="nav-text">三个经典图谱卷积模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SCNN"><span class="nav-number">4.1.</span> <span class="nav-text">SCNN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SCNN的缺点"><span class="nav-number">4.1.1.</span> <span class="nav-text">SCNN的缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChebNet"><span class="nav-number">4.2.</span> <span class="nav-text">ChebNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GCN"><span class="nav-number">4.3.</span> <span class="nav-text">GCN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shawn_Song</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
