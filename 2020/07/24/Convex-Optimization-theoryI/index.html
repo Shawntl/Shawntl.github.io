@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Optimization," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="优化问题的方法论体系“方法论体系”这个词我思考了很久决定以它作为开头开始讲起，为什么不是一如既往的在第一部分记录一下写作背景呢？因为优化问题真的是无处不在所谓“optimization is everywhere”. 这也是我工作后渐渐发现的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Convex Optimization ———— Theory I">
+<meta property="og:url" content="http://yoursite.com/2020/07/24/Convex-Optimization-theoryI/index.html">
+<meta property="og:site_name" content="Shawn&#39;s Blog">
+<meta property="og:description" content="优化问题的方法论体系“方法论体系”这个词我思考了很久决定以它作为开头开始讲起，为什么不是一如既往的在第一部分记录一下写作背景呢？因为优化问题真的是无处不在所谓“optimization is everywhere”. 这也是我工作后渐渐发现的。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://i1.fuimg.com/711106/dc30d22a124a3cdf.png">
+<meta property="og:image" content="http://i1.fuimg.com/711106/beab4432ea54e794.png">
+<meta property="og:image" content="http://i2.tiimg.com/711106/129a76f4e7a8c8c8.png">
+<meta property="article:published_time" content="2020-07-24T01:54:51.000Z">
+<meta property="article:modified_time" content="2020-08-01T12:46:09.762Z">
+<meta property="article:author" content="Shawn_Song">
+<meta property="article:tag" content="Optimization">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://i1.fuimg.com/711106/dc30d22a124a3cdf.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/07/24/Convex-Optimization-theoryI/"/>
+
+
+
+
+
+  <title>Convex Optimization ———— Theory I | Shawn's Blog</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shawn's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Talk is cheap, Show me the data</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-edit"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-clone"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/24/Convex-Optimization-theoryI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shawn_Song">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://www.qqtouxiang.com/d/file/tupian/mx/20170713/jitdbe00jpfpd.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shawn's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Convex Optimization ———— Theory I</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-24T09:54:51+08:00">
+                2020-07-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Math-foundation/" itemprop="url" rel="index">
+                    <span itemprop="name">Math foundation</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="优化问题的方法论体系"><a href="#优化问题的方法论体系" class="headerlink" title="优化问题的方法论体系"></a>优化问题的方法论体系</h1><p>“方法论体系”这个词我思考了很久决定以它作为开头开始讲起，为什么不是一如既往的在第一部分记录一下写作背景呢？<strong>因为优化问题真的是无处不在</strong>所谓“optimization is everywhere”. 这也是我工作后渐渐发现的。<br><a id="more"></a><br>大三的时候有幸选修了彭老师的运筹学，回头来看这可能是我人生的一个重要转折点，那也是我入坑数据挖掘、机器学习的开端。当时只是单纯的向往用定量的方法驱动决策的技术，并不清楚运筹学归属于优化方法，而优化方法又是用来解决什么样的问题的？ 什么样的问题可以叫做优化问题？各种各样的优化问题有对应什么其他的优化方法去求解？机器学习、数据挖掘又和优化有什么关联？也许当年彭老师讲过，但是年少无知，很多书本知识真的只有在实际问题中遇见才能理解地更加透彻。  </p>
+<p>废话说了这么多，总结起来，一开始就讲所谓的方法论体系就是想要提醒自己，这个时间点以后一定要逐步搭建一个解决问题为导向的体系。技术是血和肉，那么体系就是骨架，新的知识一定能在体系中找到位置存放，不能只见树木不见森林。关于优化问题的方法论体系，我暂且这样总结：<br><strong>步骤一</strong>:<br>确定目标，优化问题往往对应的是要最小化/最大化一个目标，所谓确定问题就是要明确此时此刻遇到的问题需要最小化/最大化的目标是什么。<br><strong>步骤二</strong>：<br><strong>Decision Variable</strong>的确定，决策变量意为需要决策的变量，也就是要计算最优值你那些变量是未知带求的。<br><strong>步骤三</strong>：<br>根据步骤1中的y和步骤2中的x，我们还要根据环境已知量找到所谓的固定参数，将他们组合起来设计<strong>目标函数</strong>。<br><strong>步骤四</strong>：<br>根据实际情况对decision variable进行条件限制，以<strong>约束函数</strong>形式表达，越是复杂的场景约束条件越多且越容易疏漏。<br><strong>步骤五</strong>：<br><strong>对目标函数形式进行判断</strong>，也叫判断是什么类型的优化问题。<br><strong>步骤六</strong>：<br>设计优化器（solver）求解优化问题。<br>这里我们重点关注步骤五、步骤六，不是前三步不重要，相反前三步很重要，基本是区分中级data scientist和高级data scientist的分水岭。需要结合行业去总结前三步的方法论，由于优化的场景实在太多了：运输问题、路径规划、仓库管理、量化投资组合、分子动力学、分子设计等等。但是万变不离其宗，重要的还是在遇到问题时有一套体系去套用。步骤五、六更偏向技术，而技术是脱离场景，可以通用的。所以初级数据科学家一定要在建立体系后扎实地学习技术。  </p>
+<h1 id="为什么要学习凸优化"><a href="#为什么要学习凸优化" class="headerlink" title="为什么要学习凸优化"></a>为什么要学习凸优化</h1><p>要从第五步讲起，意味着我们已经拿到了目标函数的数学表示。这就是今天大部分AI模型确定后所面临的场景。所以先放个熟悉的例子，便于理解。AI问题都可以看成是模型+优化。 就好像程序可以看成是算法+数据结构，回忆起上学时候Machine Learning 课上的一张slide，监督学习的四大要素：</p>
+<ul>
+<li>Training Data: S = { $\vec{x_i}$ , $y_i$ }^N </li>
+<li>Model Class：f($\vec{x}$|$\vec{w}$, b) = $\vec{w}^T$$\vec{x}$ -b <font color=red>Linear Model</font>   </li>
+<li>Loss Function: L(a,b)=(a-b)^2 <font color=red>Squared Loss</font>  </li>
+<li>Learning Objective: argmin $\sum\limits_{i=1}^{N}$ L($y_i$, f($x_i$|w, b) <font color=red>Optimization Problem</font></li>
+</ul>
+<p>我们通常学习的模型如LR, SVM, Tree-based model等等都是一个f(x)的函数，当确定loss function 之后求解最优条件下下的解的方法就是设计solver的过程，我们熟悉的梯度下降就属于无约束的优化器。<br>任何的优化问题都可以写成如下<strong>标准</strong>形式：</p>
+<script type="math/tex; mode=display">
+\begin{split} 
+Minimize \quad f_0(x) \\
+s.t. f_i(x) \leq 0 \quad i={1,...,K} \\
+\quad \quad g_j(x) = 0 \quad j={1,....,L} 
+\end{split}\tag{2.1}</script><p>$f_0(x)$是我们的目标函数，要满足最小化，我们有一个定义域的约束，符合约束的定义域对应的x我们叫他可行解。我们在可行解中找到满足优化目标的x就是一个优化过程。这里要注意一点，我们并没有限定函数$f_0(x)$以及约束条件的形式，因为他们的形式决定了我们后期要用的优化方法。（线性规划、二次型优化、半正定规划、整数规划等等）<br>拿到标准形式的目标函数后，我们通常从四个方面去对这个优化问题作分解：</p>
+<ul>
+<li>convex（LR的目标函数） vs non-convex（NN的目标函数往往是非凸的）</li>
+<li>continuos vs discrete（一般情况是连续的）</li>
+<li>constrained vs un-constrained（有约束条件时，有时我们会想办法把限制条件加入目标函数，类似涉及对偶问题、KKT条件、拉格朗日）</li>
+<li>smooth vs non-smooth(平滑的目标函数可以找到每个点的梯度)</li>
+</ul>
+<p>为什么我们要重点学习凸优化呢？也就是第一个方面。一方面因为目前已经存在很多有效的算法求解凸优化问题，理论基础很深厚，我们可以使用现在的台式计算机轻易地解决包含1数百变量、数千约束的凸优化问题，计算时间不超一百秒。而非凸问题就没有这么简单了。另一方面现阶段对于非凸问题的处理方式都是转化为凸优化问题求解或者将凸优化与局部优化结合起来使用。所以，如何识别凸优化问题？哪些问题可以转化为凸优化问题？将非凸优化问题转化为凸优化问题都有什么技巧？我们得一步步建立这方面的知识去回答上面的问题。  </p>
+<h1 id="凸优化问题判断"><a href="#凸优化问题判断" class="headerlink" title="凸优化问题判断"></a>凸优化问题判断</h1><p>标准形式的凸优化问题对比一般的标准形式问题（公式2.1），凸优化问题有三个附加的要求：</p>
+<ul>
+<li>目标函数必须是凸的</li>
+<li>不等式约束函数必须是凸的</li>
+<li>等式约束函数$h_i(x) = a^T_iX-b_i$,必须是仿射的。<br>所以我们主要工作就变成了如何判断一个函数是凸函数。</li>
+</ul>
+<h2 id="凸函数的定义"><a href="#凸函数的定义" class="headerlink" title="凸函数的定义"></a>凸函数的定义</h2><p>函数$f:R^n \rightarrow R$是凸的，如果dom $f$是凸集，且对于任意$x, y \in domf$ 和任意$0 \leq \theta \leq1$, 有：</p>
+<script type="math/tex; mode=display">f(\theta x + (1-\theta)y) \leq \theta f(x) + (1-\theta)f(y)\tag{3.1}</script><p><div align=center><img width="350" height="150" src="http://i1.fuimg.com/711106/dc30d22a124a3cdf.png"/></div><br>凸集的定义：集合C被称为凸集，如果$C$中任意两点间的线段仍在$C$中，即对于任意$x_1, x_2 \in C$和满足$0 \leq \theta \leq 1$的$\theta$都有：  </p>
+<script type="math/tex; mode=display">\theta x_1 + (1-\theta)x_2 \in C\tag{3.2}</script><p>粗略的，如果集合中的每一点都可以被其他点沿着它们之间一条无阻碍的路径看见，那么这个集合是凸集。但是复杂问题很难用定义去判断凸函数，所以我们还要介绍判断凸函数的一阶条件和二阶条件。  </p>
+<h2 id="一阶条件"><a href="#一阶条件" class="headerlink" title="一阶条件"></a>一阶条件</h2><p>假设$f$可微（即梯度$\nabla f$在开集$dom f$内处处存在），则凸函数的充要条件是$dom f$是凸集且对于任意$x, y \in dom f$, 下式成立：  </p>
+<script type="math/tex; mode=display">f(y) \geq f(x) + \nabla f(x)^T(y-x)\tag{3.3}</script><p><div align=center><img width="350" height="150" src="http://i1.fuimg.com/711106/beab4432ea54e794.png"/></div><br>这个一阶条件也很少用到。  </p>
+<h2 id="二阶条件"><a href="#二阶条件" class="headerlink" title="二阶条件"></a>二阶条件</h2><p>现在假设函数$f$二阶可微，即对于开集$dom f$内的任意一点，它的<strong>Hessian</strong>矩阵或者二阶导数$\nabla^2 f$存在，则函数$f$是凸函数的充要条件是，其Hessian矩阵是半正定阵：即对于所有的$x \in dom f$,有：</p>
+<script type="math/tex; mode=display">\nabla^2 f(x) \geq 0</script><p>怎么去理解二阶条件呢？ 即如果x是单数值变量，只要判断自己$f(x)$的二阶导数是否大于等于零即可。但是往往x可能是一个向量（一个样本可能有很多特征嘛），这个时候$f(x)$是个二阶可微分的标量函数，$\nabla^2 f(x)$就是标量函数对向量求二阶导。得到的矩阵叫做Hessian矩阵：</p>
+<script type="math/tex; mode=display">f^{''}(x) = M</script><p>如果这个M满足对任意向量$\forall v$，$V^TMV \geq 0$则M是半正定矩阵。若M是半正定矩阵，则f(x)为凸函数。  </p>
+<h2 id="两种常见的凸优化问题"><a href="#两种常见的凸优化问题" class="headerlink" title="两种常见的凸优化问题"></a>两种常见的凸优化问题</h2><p>线性规划和二次规划是两种最常见的优化问题。很直接地，我们可以想到线性函数和二次方函数一定满足是凸函数这个条件：</p>
+<script type="math/tex; mode=display">
+\begin{split}
+f(x) &=& b^Tx + c \\
+f(x) &=& \frac{1}{2}x^TAX + b^T + c
+\end{split}</script><p>关于线性函数的凸性可以根据定义直接推导得出，关于二次方函数的凸性则可以根据凸函数的二阶条件结合矩阵求导的方法进行推导得出，这里我就不详细列出推导过程了，因为比较简单。线性规划对应我们运筹学中经常遇到的问题，而二次方函数细看就是机器学习线性回归的loss function，由于是凸函数，可以用比较成熟的最小二乘法求解。  </p>
+<h1 id="对偶"><a href="#对偶" class="headerlink" title="对偶"></a>对偶</h1><p>这里要讲一个重要的优化问题求解技巧，很多时候我们的目标函数$f_0(x)$不是像线性函数或者二次方函数这样很容易判断并求解的。这时候我们找不到直接可以找到全局最优解的方法，就要曲线救国，这里用到的一个重要理论就是<strong>对偶</strong>。  </p>
+<h2 id="Lagrange"><a href="#Lagrange" class="headerlink" title="Lagrange"></a>Lagrange</h2><p>还是要回到优化问题标准形式（式2.1）,Lagrange对偶的基本思想是在目标函数$f_0(x)$中考虑约束条件$f_i(x)$和$g_i(x)$，即添加约束条件的加权和，得到增广的目标函数。定义问题(2.1)的Lagrange函数L：$R^n \times R^m \times R^p \rightarrow R$ 为：</p>
+<script type="math/tex; mode=display">L(x, \lambda, \nu) = f_0(x) + \sum^{m}_{i=1}\lambda_if_i(x) + \sum^{p}_{i=1}v_ig_i(x)\tag{4.1}</script><p>其中$\lambda_i$称为第i个不等式约束$f_i(x)\leq0$对应的<strong>Lagrange乘子</strong>；类似地，$\nu_i$称为第i个等式约束h_i(x)=0对应的Lagrange乘子。向量$\lambda$和$\nu$称为对偶变量或者是式(2.1)的<strong>Lagrange乘子向量</strong>。  </p>
+<h2 id="Lagrange-对偶函数"><a href="#Lagrange-对偶函数" class="headerlink" title="Lagrange 对偶函数"></a>Lagrange 对偶函数</h2><p>定义Lagrange对偶函数（或对偶函数）g：$R^m \times R^p \rightarrow R$为Lagrange函数在当$x$取得的最小值时关于$\lambda, \nu$的函数： 即对$\lambda \in R^m, \nu \in R^p$, 有  </p>
+<script type="math/tex; mode=display">g(\lambda, \nu) = \inf_{x \in D}L(x, \lambda, \nu) = \inf_{x \in D}(f_0(x)+\sum^{m}_{i=1}\lambda_if_i(x) + \sum^{p}_{i=1}v_ig_i(x))\tag{4.2}</script><h2 id="最优值的下界"><a href="#最优值的下界" class="headerlink" title="最优值的下界"></a>最优值的下界</h2><p>对偶函数构成了原式（2.1）目标函数$f_0(x)$最优值$p^*$的下界：即对任意$\lambda \geq 0$和$\nu$下式成立：</p>
+<script type="math/tex; mode=display">g(\lambda, \nu) \leq p^*\tag{4.3}</script><p>可以很容易地验证这个重要的性质。设$\tilde{x}$是原式（2.1）的一个可行点， 即$f_i(\tilde{x}) \leq 0$且$g_i(\tilde{x})=0$。根据这个假设， $\lambda \geq 0$, 我们有  </p>
+<script type="math/tex; mode=display">\sum^{m}_{i=1}\lambda_if_i(\tilde{x}) + \sum^{p}_{i=1}v_ig_i(\tilde{x})) \leq 0</script><p>这是因为左边的第一项非正而第二项为零。根据上述不等式，有  </p>
+<script type="math/tex; mode=display">L(\tilde{x}, \lambda, \nu) = f_0(\tilde{x}) + \sum^{m}_{i=1}\lambda_if_i(\tilde{x}) + \sum^{p}_{i=1}v_ig_i(\tilde{x}) \leq f_0(\tilde{x})</script><p>因此  </p>
+<script type="math/tex; mode=display">g(\lambda, \nu) = \inf_{x \in D}L(x, \lambda, \nu) \leq L(\tilde{x}, \lambda, \nu) \leq f_0(\tilde{x})</script><p>由于每一个可行点$\tilde{x}$都满足$g(\lambda, \nu)  \leq f_0(\tilde{x})$，因此不等式4.3成立。  </p>
+<p><div align=center><img width="350" height="250" src="http://i2.tiimg.com/711106/129a76f4e7a8c8c8.png"/></div><br>我们可视化一下这个对偶问题，上图中实线表示目标函数$f_0(x)$, 虚线表示约束函数$f_1$, 可行集是区间[-0.46,0.46].如图中两条垂直点线表示。最优点和最优值分别为$x^{✳︎}=-0.46$,$p^{✳︎}=1.54$ 在图中圆点表示。我们看到可行域内，$f_0(x)$下方有有多条不同点线，这些点线函数在x 轴上取得的最小值就是$g(\lambda,  \nu)$，而 $p^{✳︎}$是实线上在 x轴上取得的最小值。$f_0(x)$在由上而下寻找$x$, 而$g(\lambda,  \nu)$ 在由下而上找到自己的最大值$d^{✳︎}$，提高$p^{✳︎}$的下确界。求解对偶问题，可以看作是缩小 $f_0(x)$ 和 $g(\lambda,  \nu)$ 之间gap 的过程。一般情况， 这个gap都是存在的，我们只能让$d^{✳︎}$尽量去逼近$p^{✳︎}$ ，即<strong>弱对偶性</strong></p>
+<script type="math/tex; mode=display">d^* \leq p^*</script><p>如果$d^{✳︎} = p^{✳︎}$叫做<strong>强对偶性</strong>。这一般是比较理想的情况，我们只需要转化为对偶函数，求极值即可。  </p>
+<h2 id="互补松弛性"><a href="#互补松弛性" class="headerlink" title="互补松弛性"></a>互补松弛性</h2><p>设原问题和对偶问题的最优值都可以达到且相等（即强对偶性成立），这表明：</p>
+<script type="math/tex; mode=display">
+\begin{split}
+f_0(x^*) &=& g(\lambda^*,  \nu^*) \\
+&=& \inf_{x \in D}(f_0(x)+\sum^{m}_{i=1}\lambda_i^*f_i(x) + \sum^{p}_{i=1}v_i^*g_i(x)) \\
+&\leq& f_0(x^*)+\sum^{m}_{i=1}\lambda_i^*f_i(x^*) + \sum^{p}_{i=1}v_i^*g_i(x^*) \\
+&\leq& f_0(x^*)
+\end{split}</script><p>第一个等式说明最优对偶问题 gap 为零，第二个等式是对对偶函数的定义。第三个不等式是根据 Lagrange  函数关于 新求下确界小于等于其在 $x=x^{✳︎}$得来的。上面的式子链中，两个不等式最后可以取等号，是因为$\lambda^{✳︎}_i \geq 0$, $f_i(x^{✳︎}) \leq 0$。可以由此得出两个结论，第一个是：由于第三个不等式变为等式，我们知道$L(x, \lambda^{✳︎}, \nu^{✳︎})$关于x 求极小时在 $x^{✳︎}$处取得最小值。（注意，Lagrange函数$L(x, \lambda^{✳︎}, \nu^{✳︎})$也可以有其他最小点，$x^{✳︎}$只是其中一个最小点。）另外一个重要结论是</p>
+<script type="math/tex; mode=display">\sum^{m}_{i=1}{\lambda^*_if_i(x^*)} = 0</script><p>事实上，求和项的每一项都非正，因此有：</p>
+<script type="math/tex; mode=display">
+\begin{split}
+\lambda^*_i  > 0 \rightarrow f_i(x^*)=0 \\
+或者 \\
+f_i(x^*)<0 \rightarrow \lambda^*_i  = 0
+\end{split}</script><p>上述条件称为互补松弛性，有时这个条件变成了强对偶问题成立时去寻找的条件。  </p>
+<h2 id="对偶理论的用处"><a href="#对偶理论的用处" class="headerlink" title="对偶理论的用处"></a>对偶理论的用处</h2><ol>
+<li>首先我们仔细观察对偶函数$g(\lambda, \nu)$，它是一个凹函数，因为它是线性的，$f_i(x)$和$g_i(x)$是是常数系数，所以我们就发现当原问题的目标函数不好求解时，我们可以通过对偶理论，将原问题转化为凸函数的求解问题。只要找到$g(\lambda, \nu)$，我们就逼近了原问题目标函数的下界。  </li>
+<li>我们可以使用对偶函数$g(\lambda, \nu)$去确认求解原问题的优化器算法是不是正确的，如果$f_0(x)-g(\lambda, \nu)$在减小，即gap在减小，证明求解是在往正确的方向进行。</li>
+<li>转化为对偶问题可以发现一些kernel的好处，这个在SVM模型中得到了很好的体现，SVM的原问题目标函数很难看出使用kernel的好处，具体我会在后面SVM的原理推导中详细描述。  </li>
+</ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>作为凸优化的第一篇随笔，主要铺开了优化问题的求解体系，罗列了凸优化的基本概念，和一些本人目前遇到的问题中常常用到的凸优化问题判别和转化技巧。后期会结合一些实际AI模型，或者应用去阐述其他理论，例如KKT条件、无约束优化算法等等。  </p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><em>Stephen Boyd, Lieven Vandenberghe Convex Optimization</em></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Optimization/" rel="tag"># Optimization</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/24/Spectral-Graph-Convolutional-Neural-Networks/" rel="next" title="Spectral Graph Convolutional Neural Networks">
+                <i class="fa fa-chevron-left"></i> Spectral Graph Convolutional Neural Networks
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://www.qqtouxiang.com/d/file/tupian/mx/20170713/jitdbe00jpfpd.jpg"
+                alt="Shawn_Song" />
+            
+              <p class="site-author-name" itemprop="name">Shawn_Song</p>
+              <p class="site-description motion-element" itemprop="description">A way of self-cultivation of a young data scientist</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7Cedit">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Shawntl" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="zheweisong@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#优化问题的方法论体系"><span class="nav-number">1.</span> <span class="nav-text">优化问题的方法论体系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要学习凸优化"><span class="nav-number">2.</span> <span class="nav-text">为什么要学习凸优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#凸优化问题判断"><span class="nav-number">3.</span> <span class="nav-text">凸优化问题判断</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#凸函数的定义"><span class="nav-number">3.1.</span> <span class="nav-text">凸函数的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一阶条件"><span class="nav-number">3.2.</span> <span class="nav-text">一阶条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二阶条件"><span class="nav-number">3.3.</span> <span class="nav-text">二阶条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两种常见的凸优化问题"><span class="nav-number">3.4.</span> <span class="nav-text">两种常见的凸优化问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对偶"><span class="nav-number">4.</span> <span class="nav-text">对偶</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lagrange"><span class="nav-number">4.1.</span> <span class="nav-text">Lagrange</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lagrange-对偶函数"><span class="nav-number">4.2.</span> <span class="nav-text">Lagrange 对偶函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最优值的下界"><span class="nav-number">4.3.</span> <span class="nav-text">最优值的下界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互补松弛性"><span class="nav-number">4.4.</span> <span class="nav-text">互补松弛性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对偶理论的用处"><span class="nav-number">4.5.</span> <span class="nav-text">对偶理论的用处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shawn_Song</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
